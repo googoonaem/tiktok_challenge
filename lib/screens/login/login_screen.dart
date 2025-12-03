@@ -19,6 +19,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               Gaps.v96,
+              Gaps.v10,
               Gaps.v96,
               Text(
                 "See what's happening in the world right now.",
@@ -28,9 +29,17 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v96,
-              Gaps.v48,
-              AutnButton(darkmode: false, text: "Continue with Google"),
-              AutnButton(darkmode: false, text: "Continue with Apple"),
+              Gaps.v36,
+              AutnButton(
+                icon: "google",
+                darkmode: false,
+                text: "Continue with Google",
+              ),
+              AutnButton(
+                icon: "apple",
+                darkmode: false,
+                text: "Continue with Apple",
+              ),
               Gaps.v20,
               Row(
                 children: [
@@ -41,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                   Text(
                     "or",
                     style: TextStyle(
-                      fontSize: Sizes.size20,
+                      fontSize: Sizes.size14,
                       fontWeight: FontWeight.w500,
                       color: Colors.grey.shade600,
                     ),
@@ -52,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              AutnButton(darkmode: true, text: "Create account"),
+              AutnButton(darkmode: true, text: "Create account", icon: ""),
               Gaps.v20,
               Row(
                 children: [

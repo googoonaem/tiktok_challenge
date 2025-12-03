@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_challenge/constants/gaps.dart';
 import 'package:tiktok_challenge/constants/sizes.dart';
 import 'package:tiktok_challenge/screens/login/login_screen.dart';
@@ -21,8 +22,14 @@ class SignUpScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: Sizes.size32),
           child: Column(
             children: [
+              Gaps.v32,
+              FaIcon(
+                FontAwesomeIcons.twitter,
+                color: Theme.of(context).primaryColor,
+                size: Sizes.size28,
+              ),
               Gaps.v96,
-              Gaps.v96,
+              Gaps.v64,
               Text(
                 "See what's happening in the world right now.",
                 style: TextStyle(
@@ -31,10 +38,18 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v96,
-              Gaps.v48,
-              AutnButton(darkmode: false, text: "Continue with Google"),
-              AutnButton(darkmode: false, text: "Continue with Apple"),
-              Gaps.v20,
+              Gaps.v36,
+              AutnButton(
+                darkmode: false,
+                text: "Continue with Google",
+                icon: "google",
+              ),
+              AutnButton(
+                darkmode: false,
+                text: "Continue with Apple",
+                icon: "apple",
+              ),
+              Gaps.v14,
               Row(
                 children: [
                   Expanded(
@@ -44,7 +59,7 @@ class SignUpScreen extends StatelessWidget {
                   Text(
                     "or",
                     style: TextStyle(
-                      fontSize: Sizes.size20,
+                      fontSize: Sizes.size14,
                       fontWeight: FontWeight.w500,
                       color: Colors.grey.shade600,
                     ),
@@ -55,8 +70,8 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              AutnButton(darkmode: true, text: "Create account"),
-              Gaps.v20,
+              AutnButton(darkmode: true, text: "Create account", icon: ""),
+              Gaps.v16,
               Row(
                 children: [
                   Text(
