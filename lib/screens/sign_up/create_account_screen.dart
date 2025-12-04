@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_challenge/constants/gaps.dart';
 import 'package:tiktok_challenge/constants/sizes.dart';
 import 'package:tiktok_challenge/screens/sign_up/customize_screen.dart';
+import 'package:tiktok_challenge/screens/sign_up/code_screen.dart';
 import 'package:tiktok_challenge/screens/sign_up/widgets/text_field.dart';
 
 class CreateAccountScreen extends StatefulWidget {
@@ -274,6 +275,13 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).pop(true);
+                        if (_finish) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => CodeScreen(),
+                            ),
+                          );
+                        }
                       },
                       child: FractionallySizedBox(
                         widthFactor: 1,
