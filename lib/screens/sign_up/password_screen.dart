@@ -14,9 +14,21 @@ class PasswordScreen extends StatefulWidget {
 
 class _PasswordScreenState extends State<PasswordScreen> {
   bool _finish = false;
-  TextEditingController controller = TextEditingController();
+  bool _obscureText = true;
+  String _password = "";
+  final TextEditingController _passwordController = TextEditingController();
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
+  }
+
+  void _onEyeTap() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  bool _passwordVald() {
+    return _password.isNotEmpty && _password.length > 8;
   }
 
   @override
@@ -59,37 +71,44 @@ class _PasswordScreenState extends State<PasswordScreen> {
               Stack(
                 children: [
                   TextField(
-                    controller: controller,
+                    controller: _passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: _obscureText,
                     onChanged: (value) {
-                      if (value.isNotEmpty && value.length > 8) {
-                        setState(() {
-                          _finish = !_finish;
-                        });
-                      }
+                      setState(() {
+                        _password = value;
+                        _finish = _passwordVald();
+                      });
                     },
+
                     decoration: InputDecoration(
+                      suffixIcon: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          GestureDetector(
+                            onTap: _onEyeTap,
+                            child: FaIcon(
+                              _obscureText
+                                  ? FontAwesomeIcons.eye
+                                  : FontAwesomeIcons.eyeSlash,
+                              size: Sizes.size24,
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          Gaps.h6,
+                          Opacity(
+                            opacity: _finish ? 1 : 0,
+                            child: FaIcon(
+                              FontAwesomeIcons.solidCircleCheck,
+                              size: Sizes.size20,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ],
+                      ),
                       hintText: "Password",
                       hintStyle: TextStyle(color: Colors.grey.shade300),
                       labelText: "Password",
-                    ),
-                  ),
-                  Positioned(
-                    bottom: Sizes.size10,
-                    right: Sizes.size10,
-                    child: Row(
-                      children: [
-                        FaIcon(
-                          FontAwesomeIcons.eyeSlash,
-                          size: Sizes.size24,
-                          color: Colors.grey.shade400,
-                        ),
-                        Gaps.h10,
-                        FaIcon(
-                          FontAwesomeIcons.solidCircleCheck,
-                          size: Sizes.size24,
-                          color: _finish ? Colors.green : Colors.grey.shade400,
-                        ),
-                      ],
                     ),
                   ),
                 ],

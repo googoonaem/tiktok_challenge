@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_challenge/constants/gaps.dart';
 import 'package:tiktok_challenge/constants/sizes.dart';
 import 'package:tiktok_challenge/screens/common_widget/round_corner_button.dart';
-import 'package:tiktok_challenge/screens/sign_up/interests1_screen.dart';
 import 'package:tiktok_challenge/screens/sign_up/password_screen.dart';
 
 class CodeScreen extends StatefulWidget {
@@ -16,6 +15,7 @@ class CodeScreen extends StatefulWidget {
 
 class _CodeScreenState extends State<CodeScreen> {
   bool _finish = false;
+  List<String> code = List.generate(6, (_) => "");
 
   final List<TextEditingController> controllers = List.generate(
     6,
@@ -80,11 +80,10 @@ class _CodeScreenState extends State<CodeScreen> {
                         if (value.isNotEmpty && index < 5) {
                           FocusScope.of(context).nextFocus();
                         }
-                        if (index == 5) {
-                          setState(() {
-                            _finish = !_finish;
-                          });
-                        }
+                        setState(() {
+                          code[index] = value;
+                          _finish = code.every((e) => e.isNotEmpty);
+                        });
                       },
                     ),
                   );
