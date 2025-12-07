@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_challenge/constants/gaps.dart';
 import 'package:tiktok_challenge/constants/sizes.dart';
+import 'package:tiktok_challenge/screens/sign_up/sign_up_screen.dart';
 
-class InterestsDetailScreen extends StatelessWidget {
-  InterestsDetailScreen({super.key});
+class InterestsDetailScreen extends StatefulWidget {
+  const InterestsDetailScreen({super.key, required this.interestsList});
+  final List<String> interestsList;
+
+  @override
+  State<InterestsDetailScreen> createState() => _InterestsDetailScreenState();
+}
+
+class _InterestsDetailScreenState extends State<InterestsDetailScreen> {
   final Map<String, List<String>> interestDetails = {
     "Fashion & beauty": [
       "Makeup trends",
@@ -448,6 +456,25 @@ class InterestsDetailScreen extends StatelessWidget {
     ],
   };
 
+  final Map<String, List<String>> _selectedDetail = {};
+
+  void _buttonTap(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => SignUpScreen()));
+  }
+
+  void _detailSelect(String interest, String detail) {
+    setState(() {
+      _selectedDetail.putIfAbsent(interest, () => []);
+      if (_selectedDetail[interest]!.contains(detail)) {
+        _selectedDetail[interest]!.remove(detail);
+      } else {
+        _selectedDetail[interest]!.add(detail);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -497,7 +524,136 @@ class InterestsDetailScreen extends StatelessWidget {
             thickness: 0,
           ),
           Gaps.v24,
+          SizedBox(
+            height: 500,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Sizes.size20),
+                child: Column(
+                  children: [
+                    for (var interest in widget.interestsList)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Gaps.v10,
+                          Text(interest),
+                          Gaps.v20,
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: SizedBox(
+                              width: 1000,
+                              child: Wrap(
+                                runSpacing: Sizes.size10,
+                                spacing: Sizes.size10,
+                                children: [
+                                  for (var detail
+                                      in interestDetails[interest] ?? [])
+                                    GestureDetector(
+                                      onTap: () =>
+                                          _detailSelect(interest, detail),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color:
+                                              _selectedDetail[interest]
+                                                      ?.contains(detail) ==
+                                                  true
+                                              ? Theme.of(context).primaryColor
+                                              : Colors.white,
+                                          borderRadius: BorderRadius.circular(
+                                            Sizes.size28,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  _selectedDetail[interest]
+                                                          ?.contains(detail) ==
+                                                      true
+                                                  ? Theme.of(
+                                                      context,
+                                                    ).primaryColor
+                                                  : Colors.white,
+                                            ),
+                                          ],
+                                          border: BoxBorder.all(
+                                            color:
+                                                _selectedDetail[interest]
+                                                        ?.contains(detail) ==
+                                                    true
+                                                ? Theme.of(context).primaryColor
+                                                : Colors.grey.shade400,
+                                          ),
+                                        ),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: Sizes.size20,
+                                          vertical: Sizes.size14,
+                                        ),
+                                        child: Text(
+                                          detail,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            color:
+                                                _selectedDetail[interest]
+                                                        ?.contains(detail) ==
+                                                    true
+                                                ? Colors.white
+                                                : Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Gaps.v20,
+                        ],
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
+      ),
+      bottomSheet: Container(
+        alignment: Alignment.centerRight,
+        height: 70,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.symmetric(
+            horizontal: BorderSide(
+              width: Sizes.size1,
+              color: Colors.grey.shade300,
+            ),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Sizes.size28,
+            vertical: Sizes.size10,
+          ),
+          child: GestureDetector(
+            onTap: () => _buttonTap(context),
+            child: Container(
+              width: Sizes.size80,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(Sizes.size36),
+              ),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "Next",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: Sizes.size20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

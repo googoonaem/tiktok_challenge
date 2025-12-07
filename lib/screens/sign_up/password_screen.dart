@@ -33,106 +33,108 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _onScaffoldTap,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          title: Center(
-            child: FaIcon(
-              FontAwesomeIcons.twitter,
-              color: Theme.of(context).primaryColor,
-              size: Sizes.size28,
+    return ClipRRect(
+      child: GestureDetector(
+        onTap: _onScaffoldTap,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            automaticallyImplyLeading: false,
+            title: Center(
+              child: FaIcon(
+                FontAwesomeIcons.twitter,
+                color: Theme.of(context).primaryColor,
+                size: Sizes.size28,
+              ),
             ),
           ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Sizes.size32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Gaps.v36,
-              Text(
-                "You'll need a password",
-                style: TextStyle(
-                  fontSize: Sizes.size28,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-              Gaps.v20,
-              Text(
-                "Make sure it's 8 characters or more.",
-                style: TextStyle(
-                  color: Colors.grey.shade700,
-                  fontSize: Sizes.size16,
-                ),
-              ),
-              Stack(
-                children: [
-                  TextField(
-                    controller: _passwordController,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: _obscureText,
-                    onChanged: (value) {
-                      setState(() {
-                        _password = value;
-                        _finish = _passwordVald();
-                      });
-                    },
-
-                    decoration: InputDecoration(
-                      suffixIcon: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          GestureDetector(
-                            onTap: _onEyeTap,
-                            child: FaIcon(
-                              _obscureText
-                                  ? FontAwesomeIcons.eye
-                                  : FontAwesomeIcons.eyeSlash,
-                              size: Sizes.size24,
-                              color: Colors.grey.shade400,
-                            ),
-                          ),
-                          Gaps.h6,
-                          Opacity(
-                            opacity: _finish ? 1 : 0,
-                            child: FaIcon(
-                              FontAwesomeIcons.solidCircleCheck,
-                              size: Sizes.size20,
-                              color: Colors.green,
-                            ),
-                          ),
-                        ],
-                      ),
-                      hintText: "Password",
-                      hintStyle: TextStyle(color: Colors.grey.shade300),
-                      labelText: "Password",
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        bottomSheet: Container(
-          height: 120,
-          decoration: BoxDecoration(color: Colors.white),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Sizes.size24,
-              vertical: Sizes.size20,
-            ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Sizes.size32),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RoundCornerButton(
-                  checked: _finish,
-                  text: "Next",
-                  goto: InterestsScreen(),
+                Gaps.v36,
+                Text(
+                  "You'll need a password",
+                  style: TextStyle(
+                    fontSize: Sizes.size28,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                Gaps.v20,
+                Text(
+                  "Make sure it's 8 characters or more.",
+                  style: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontSize: Sizes.size16,
+                  ),
+                ),
+                Stack(
+                  children: [
+                    TextField(
+                      controller: _passwordController,
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: _obscureText,
+                      onChanged: (value) {
+                        setState(() {
+                          _password = value;
+                          _finish = _passwordVald();
+                        });
+                      },
+
+                      decoration: InputDecoration(
+                        suffixIcon: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            GestureDetector(
+                              onTap: _onEyeTap,
+                              child: FaIcon(
+                                _obscureText
+                                    ? FontAwesomeIcons.eye
+                                    : FontAwesomeIcons.eyeSlash,
+                                size: Sizes.size24,
+                                color: Colors.grey.shade400,
+                              ),
+                            ),
+                            Gaps.h6,
+                            Opacity(
+                              opacity: _finish ? 1 : 0,
+                              child: FaIcon(
+                                FontAwesomeIcons.solidCircleCheck,
+                                size: Sizes.size20,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
+                        hintText: "Password",
+                        hintStyle: TextStyle(color: Colors.grey.shade300),
+                        labelText: "Password",
+                      ),
+                    ),
+                  ],
                 ),
               ],
+            ),
+          ),
+          bottomSheet: Container(
+            height: 120,
+            decoration: BoxDecoration(color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Sizes.size24,
+                vertical: Sizes.size20,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RoundCornerButton(
+                    checked: _finish,
+                    text: "Next",
+                    goto: InterestsScreen(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -12,7 +12,6 @@ class InterestsScreen extends StatefulWidget {
 }
 
 class _InterestsScreenState extends State<InterestsScreen> {
-  final bool _screen = true;
   final bool _finish = true;
   final List<String> interestsList = [
     "Fashion & beauty",
@@ -36,15 +35,26 @@ class _InterestsScreenState extends State<InterestsScreen> {
     "DIY & crafts",
     "Pets & animals",
   ];
-  final List<String> _checkedList = ["add()로 넣으면 된다고 함"];
+  final List<String> _checkedList = [];
 
   void _buttonTap(BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (context) => InterestsDetailScreen()));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) =>
+            InterestsDetailScreen(interestsList: _checkedList),
+      ),
+    );
   }
 
-  void _cardTap() {}
+  void _cardTap(String interest) {
+    setState(() {
+      if (_checkedList.contains(interest)) {
+        _checkedList.remove(interest);
+      } else {
+        _checkedList.add(interest);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,95 +73,111 @@ class _InterestsScreenState extends State<InterestsScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              top: Sizes.size5,
-              left: Sizes.size20,
-              right: Sizes.size20,
-              bottom: Sizes.size5,
-            ),
-            child: Column(
-              children: [
-                Text(
-                  "What do you want to see on Twitter?",
-                  style: TextStyle(
-                    fontSize: Sizes.size36,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                Gaps.v16,
-                Text(
-                  "Select at least 3 interests to personalize your Twitter experience. They will be visible on your profile.",
-                ),
-              ],
-            ),
-          ),
-          Gaps.v24,
-          Divider(
-            color: Colors.grey.shade400,
-            height: Sizes.size2,
-            thickness: 0,
-          ),
-          Gaps.v24,
-          Gaps.v12,
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                top: Sizes.size5,
                 left: Sizes.size20,
                 right: Sizes.size20,
-                bottom: Sizes.size72,
+                bottom: Sizes.size5,
               ),
-              child: GridView.count(
-                childAspectRatio: Sizes.size80 / Sizes.size52,
-                crossAxisCount: 2,
-                children: List.generate(interestsList.length, (index) {
-                  return GestureDetector(
-                    onTap: () => _cardTap,
-                    child: Card(
-                      color: Colors.white,
-                      margin: EdgeInsets.all(Sizes.size5),
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.grey.shade300),
-                        borderRadius: BorderRadiusGeometry.circular(
-                          Sizes.size28,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: Sizes.size8,
-                          horizontal: Sizes.size16,
-                        ),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              right: 0,
-                              top: Sizes.size5,
-                              child: FaIcon(FontAwesomeIcons.solidCircleCheck),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Text(
-                                interestsList[index],
-                                style: TextStyle(
-                                  fontSize: Sizes.size16,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+              child: Column(
+                children: [
+                  Text(
+                    "What do you want to see on Twitter?",
+                    style: TextStyle(
+                      fontSize: Sizes.size36,
+                      fontWeight: FontWeight.w900,
                     ),
-                  );
-                }),
+                  ),
+                  Gaps.v16,
+                  Text(
+                    "Select at least 3 interests to personalize your Twitter experience. They will be visible on your profile.",
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            Gaps.v24,
+            Divider(
+              color: Colors.grey.shade400,
+              height: Sizes.size2,
+              thickness: 0,
+            ),
+            Gaps.v24,
+            Gaps.v12,
+            SizedBox(
+              height: 540,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: Sizes.size40,
+                    left: Sizes.size20,
+                  ),
+                  child: Wrap(
+                    runSpacing: Sizes.size20,
+                    spacing: Sizes.size20,
+                    children: [
+                      for (var interest in interestsList)
+                        GestureDetector(
+                          onTap: () => _cardTap(interest),
+                          child: Container(
+                            width: 170,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: _checkedList.contains(interest)
+                                  ? Theme.of(context).primaryColor
+                                  : Colors.white,
+                              borderRadius: BorderRadius.circular(Sizes.size24),
+                              border: Border.all(
+                                color: _checkedList.contains(interest)
+                                    ? Theme.of(context).primaryColor
+                                    : Colors.grey.shade200,
+                                width: Sizes.size2,
+                              ),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              vertical: Sizes.size10,
+                              horizontal: Sizes.size10,
+                            ),
+                            child: Stack(
+                              alignment: Alignment.bottomLeft,
+                              children: [
+                                Text(
+                                  interest,
+                                  style: TextStyle(
+                                    color: _checkedList.contains(interest)
+                                        ? Colors.white
+                                        : Colors.black,
+                                    fontSize: Sizes.size20,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 0,
+                                  right: 0,
+                                  child: FaIcon(
+                                    FontAwesomeIcons.solidCircleCheck,
+                                    color: _checkedList.contains(interest)
+                                        ? Colors.white
+                                        : Colors.transparent,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      SizedBox(height: 140),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      bottomSheet: _finish
+      bottomSheet: _checkedList.length > 2
           ? Container(
               height: 70,
               decoration: BoxDecoration(

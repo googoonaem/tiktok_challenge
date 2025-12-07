@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_challenge/screens/sign_up/code_screen.dart';
-import 'package:tiktok_challenge/screens/sign_up/interests_screen.dart';
 import 'package:tiktok_challenge/screens/sign_up/sign_up_screen.dart';
 
 void main() {
@@ -20,7 +19,7 @@ class TwitterApp extends StatelessWidget {
         cardColor: Colors.white,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: InterestsScreen(),
+      home: CodeScreen(),
     );
   }
 }
