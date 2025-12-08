@@ -536,7 +536,13 @@ class _InterestsDetailScreenState extends State<InterestsDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Gaps.v10,
-                          Text(interest),
+                          Text(
+                            interest,
+                            style: TextStyle(
+                              fontSize: Sizes.size20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                           Gaps.v20,
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
