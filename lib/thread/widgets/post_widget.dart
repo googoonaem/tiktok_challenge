@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_challenge/constants/gaps.dart';
 import 'package:tiktok_challenge/constants/sizes.dart';
 import 'package:tiktok_challenge/thread/widgets/post_icon_widget.dart';
+import 'package:tiktok_challenge/thread/bottom_screens/post_more_screen.dart';
 
 class PostWidget extends StatelessWidget {
   const PostWidget({
@@ -38,6 +39,15 @@ class PostWidget extends StatelessWidget {
     return "${diff.inDays}일 전";
   }
 
+  void _moreTap(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      showDragHandle: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => PostMoreWidget(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -68,30 +78,44 @@ class PostWidget extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          username,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: Sizes.size20,
+                    SizedBox(
+                      width: 310,
+                      child: Stack(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                username,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: Sizes.size20,
+                                ),
+                              ),
+                              Gaps.h5,
+                              if (verified)
+                                FaIcon(
+                                  FontAwesomeIcons.solidCircleCheck,
+                                  size: Sizes.size14,
+                                  color: Colors.lightBlue,
+                                ),
+                              Gaps.h5,
+                            ],
                           ),
-                        ),
-                        verified
-                            ? Row(
-                                children: [
-                                  Gaps.h5,
-                                  FaIcon(
-                                    FontAwesomeIcons.solidCircleCheck,
-                                    size: Sizes.size14,
-                                    color: Colors.lightBlue,
-                                  ),
-                                  Gaps.h5,
-                                ],
-                              )
-                            : Gaps.h14,
-                        Text(_timeAgo(postTime)),
-                      ],
+                          Positioned(
+                            right: 0,
+                            child: Row(
+                              children: [
+                                Text(_timeAgo(postTime)),
+                                Gaps.h10,
+                                GestureDetector(
+                                  onTap: () => _moreTap(context),
+                                  child: FaIcon(FontAwesomeIcons.ellipsis),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       width: 310,

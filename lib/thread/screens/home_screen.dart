@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_challenge/constants/gaps.dart';
 import 'package:tiktok_challenge/constants/sizes.dart';
+import 'package:tiktok_challenge/thread/bottom_screens/write_post_screen.dart';
 import 'package:tiktok_challenge/thread/widgets/post_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -42,9 +43,20 @@ class _HomeScreenState extends State<HomeScreen>
     _scrollController.dispose();
   }
 
+  void _writeTap(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      showDragHandle: true,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => WritePostScreen(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: showTitle ? Size.fromHeight(140) : Size.fromHeight(0),
         child: AppBar(
@@ -100,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen>
                       postTime: DateTime(2025, 11, 30, 22, 13, 11),
                     ),
                     PostWidget(
-                      username: "shityoushouldcareabout",
+                      username: "shityoushouldcare",
                       verified: true,
                       content:
                           "my phone feels like a vibrator with all these notifications rn",
@@ -127,6 +139,10 @@ class _HomeScreenState extends State<HomeScreen>
         currentIndex: _selectedIndex,
         onTap: (index) {
           setState(() {
+            if (index == 2) {
+              _writeTap(context);
+              return;
+            }
             _selectedIndex = index;
           });
         },
