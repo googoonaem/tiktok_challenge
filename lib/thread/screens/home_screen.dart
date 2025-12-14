@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_challenge/constants/gaps.dart';
 import 'package:tiktok_challenge/constants/sizes.dart';
 import 'package:tiktok_challenge/thread/bottom_screens/write_post_screen.dart';
+import 'package:tiktok_challenge/thread/screens/activity_screen.dart';
+import 'package:tiktok_challenge/thread/screens/search_screen.dart';
 import 'package:tiktok_challenge/thread/widgets/post_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,9 +23,9 @@ class _HomeScreenState extends State<HomeScreen>
 
   final screens = [
     Center(child: Text("1")),
-    Center(child: Text("2")),
+    SearchScreen(),
     Center(child: Text("3")),
-    Center(child: Text("4")),
+    ActivityScreen(),
     Center(child: Text("5")),
   ];
 
@@ -57,24 +59,37 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: PreferredSize(
-        preferredSize: showTitle ? Size.fromHeight(140) : Size.fromHeight(0),
-        child: AppBar(
-          elevation: 0,
-          surfaceTintColor: Colors.transparent,
-          flexibleSpace: Opacity(
-            opacity: showTitle ? 1 : 0,
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: showTitle ? Sizes.size48 : 0),
-                child: FaIcon(FontAwesomeIcons.threads, size: Sizes.size32),
+      backgroundColor: Colors.white,
+      appBar: _selectedIndex == 0
+          ? PreferredSize(
+              preferredSize: showTitle
+                  ? Size.fromHeight(140)
+                  : Size.fromHeight(0),
+              child: AppBar(
+                elevation: 0,
+                surfaceTintColor: Colors.transparent,
+                flexibleSpace: Opacity(
+                  opacity: showTitle ? 1 : 0,
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: showTitle ? Sizes.size48 : 0,
+                      ),
+                      child: FaIcon(
+                        FontAwesomeIcons.threads,
+                        size: Sizes.size32,
+                      ),
+                    ),
+                  ),
+                ),
+                backgroundColor: Colors.white,
+                centerTitle: true,
               ),
+            )
+          : PreferredSize(
+              preferredSize: Size.fromHeight(0),
+              child: AppBar(backgroundColor: Colors.white),
             ),
-          ),
-          backgroundColor: Colors.white,
-          centerTitle: true,
-        ),
-      ),
       body: _selectedIndex == 0
           ? Scrollbar(
               controller: _scrollController,
@@ -157,12 +172,14 @@ class _HomeScreenState extends State<HomeScreen>
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
             icon: FaIcon(FontAwesomeIcons.house),
+            activeIcon: FaIcon(FontAwesomeIcons.houseChimney),
             label: "",
             tooltip: "Home",
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
             icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+            activeIcon: FaIcon(FontAwesomeIcons.magnifyingGlassPlus),
             label: "",
             tooltip: "Search",
           ),
@@ -170,17 +187,19 @@ class _HomeScreenState extends State<HomeScreen>
             backgroundColor: Colors.white,
             icon: FaIcon(FontAwesomeIcons.squareThreads),
             label: "",
-            tooltip: "home",
+            tooltip: "write",
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
             icon: FaIcon(FontAwesomeIcons.heart),
+            activeIcon: FaIcon(FontAwesomeIcons.solidHeart),
             label: "",
             tooltip: "heart",
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
             icon: FaIcon(FontAwesomeIcons.user),
+            activeIcon: FaIcon(FontAwesomeIcons.solidUser),
             label: "",
             tooltip: "user",
           ),
