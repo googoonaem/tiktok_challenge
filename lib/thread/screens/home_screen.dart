@@ -5,6 +5,7 @@ import 'package:tiktok_challenge/constants/sizes.dart';
 import 'package:tiktok_challenge/thread/bottom_screens/write_post_screen.dart';
 import 'package:tiktok_challenge/thread/screens/activity_screen.dart';
 import 'package:tiktok_challenge/thread/screens/search_screen.dart';
+import 'package:tiktok_challenge/thread/screens/user_screen.dart';
 import 'package:tiktok_challenge/thread/widgets/post_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen>
     SearchScreen(),
     Center(child: Text("3")),
     ActivityScreen(),
-    Center(child: Text("5")),
+    UserScreen(),
   ];
 
   @override

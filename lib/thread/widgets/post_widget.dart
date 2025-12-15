@@ -54,7 +54,7 @@ class PostWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: Sizes.size12),
       child: Column(
         children: [
-          Divider(color: Colors.grey.shade300),
+          Divider(color: Colors.grey.shade300, height: 0),
           Gaps.v14,
           IntrinsicHeight(
             child: Row(
